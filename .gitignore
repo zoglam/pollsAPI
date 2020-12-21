@@ -1,0 +1,8 @@
+.vscode
+__pycache__
+
+db.*
+*_initial.py
+*_auto_*.py
+
+*.exe
