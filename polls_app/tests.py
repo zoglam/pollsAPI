@@ -61,23 +61,3 @@ class RequestForQuestion(TestCase):
         })
         print(f'{resp}')
         self.assertEqual(resp['status'], 'False')
-
-
-class DBCase(TestCase):
-    def setUp(self) -> None:
-        Question.objects.create(
-            title="Test question",
-            description="made by admin",
-            date_published=datetime(2020, 6, 1),
-            date_end=datetime(2020, 6, 2)
-        )
-
-    def test_question_create(self):
-        obj = Question.objects.get(title="Test question")
-        self.assertEqual(obj.get_json(), {
-            'id': 1,
-            'title': 'Test question',
-            'description': 'made by admin',
-            'date_published': '2020-06-01',
-            'date_end': '2020-06-02'
-        })
