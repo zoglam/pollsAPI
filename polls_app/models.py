@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 import rest_framework.request
 import rest_framework
-
 # Create your models here.
 
 
@@ -14,14 +13,39 @@ class Question(models.Model):
     date_end = models.DateTimeField(default=None, verbose_name='date_end')
 
     @staticmethod
+    def custom_create(query):
+        query_dict = {
+            k: query[k] for k in query
+            if k in ['title', 'description', 'date_published', 'date_end']
+        }
+        for key in ['date_published', 'date_end']:
+            if key in query_dict:
+                query_dict[key] = datetime.strptime(
+                    query_dict[key], '%Y-%m-%d')
+
+        Question.objects.create(**query_dict)
+
+    @staticmethod
+    def custom_update(id_question, query):
+        query_dict = {
+            k: query[k] for k in query
+            if k in ['title', 'description', 'date_published', 'date_end']
+        }
+        for key in ['date_published', 'date_end']:
+            if key in query_dict:
+                query_dict[key] = datetime.strptime(
+                    query_dict[key], '%Y-%m-%d')
+
+        Question.objects.update(pk=id_question, **query_dict)
+
+    @staticmethod
     def get_all(request: rest_framework.request.Request) -> list:
+        response_list = []
         questions = (
             Question.objects.all().values()
             if request.user.is_authenticated
             else Question.objects.filter(date_end__gte=datetime.now()).values()
         )
-
-        response_list = []
         for x in questions:
             x['answers'] = Answer.objects.filter(id_question=x['id']).values()
             response_list.append(x)
