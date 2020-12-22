@@ -1,5 +1,4 @@
 from rest_framework.response import Response
-from rest_framework.request import Request
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -7,14 +6,12 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
 
 from .models import Question, Answer
-from datetime import datetime
-import re
 # Create your views here.
 
 
-@ api_view(['POST'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((AllowAny,))
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((AllowAny,))
 def auth(request):
     query = request.data
     if all((x in query for x in ['username', 'password'])):
@@ -42,23 +39,16 @@ def getQuestions(request):
         }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['POST'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
 def createQuestion(request):
     query = request.data
     try:
-        if not all((x in query for x in
-                    ('title', 'description', 'date_published', 'date_end'))):
+        if 'title' not in query:
             raise Exception('Not enough values')
 
-        Question.objects.create(
-            title=query['title'],
-            description=query['description'],
-            date_published=datetime.strptime(
-                query['date_published'], '%Y-%m-%d'),
-            date_end=datetime.strptime(query['date_end'], '%Y-%m-%d')
-        )
+        Question.custom_create(query)
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
@@ -67,16 +57,24 @@ def createQuestion(request):
         }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['PUT'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
-def alterQuestion(request):
-    pass
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
+def alterQuestion(request, id_question=None):
+    query = request.data
+    try:
+        Question.custom_update(id_question, query)
+        return Response({'status': 'True'}, status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'status': 'False',
+            'details': f'{e}'
+        }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['DELETE'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
+@api_view(['DELETE'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
 def deleteQuestion(request, id_question=None):
     try:
         Question.objects.delete(pk=id_question)
@@ -88,9 +86,9 @@ def deleteQuestion(request, id_question=None):
         }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['POST'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
 def createAnswer(request):
     query = request.data
     try:
@@ -111,16 +109,27 @@ def createAnswer(request):
         }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['PUT'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
-def alterAnswer(request):
-    pass
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
+def alterAnswer(request, id_answer=None):
+    query = request.data
+    try:
+        Answer.objects.update(pk=id_answer, **{
+            k: query[k] for k in query
+            if k in ['title', 'votes', 'answer_type']
+        })
+        return Response({'status': 'True'}, status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'status': 'False',
+            'details': f'{e}'
+        }, status.HTTP_400_BAD_REQUEST)
 
 
-@ api_view(['DELETE'])
-@ authentication_classes((SessionAuthentication, BasicAuthentication,))
-@ permission_classes((IsAuthenticated,))
+@api_view(['DELETE'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((IsAuthenticated,))
 def deleteAnswer(request, id_answer=None):
     try:
         Answer.objects.delete(pk=id_answer)
