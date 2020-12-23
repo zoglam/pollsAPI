@@ -1,0 +1,23 @@
+[
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 1,
+        "fields": {
+            "type": "text"
+        }
+    },
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 2,
+        "fields": {
+            "type": "radio"
+        }
+    },
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 3,
+        "fields": {
+            "type": "checkbox"
+        }
+    }
+]

@@ -1,0 +1,82 @@
+[
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 1,
+        "fields": {
+            "type": "text"
+        }
+    },
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 2,
+        "fields": {
+            "type": "radio"
+        }
+    },
+    {
+        "model": "polls_app.QuestionType",
+        "pk": 3,
+        "fields": {
+            "type": "checkbox"
+        }
+    },
+    {
+        "model": "polls_app.Poll",
+        "pk": 1,
+        "fields": {
+            "title": "poll1"
+        }
+    },
+    {
+        "model": "polls_app.Poll",
+        "pk": 2,
+        "fields": {
+            "title": "poll2"
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 1,
+        "fields": {
+            "id_poll":1, 
+            "title":"question1", 
+            "question_type":1
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 2,
+        "fields": {
+            "id_poll":1, 
+            "title":"question2", 
+            "question_type":1
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 3,
+        "fields": {
+            "id_poll":1,
+            "title":"question3", 
+            "question_type":1
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 4,
+        "fields": {
+            "id_poll":2, 
+            "title":"question1", 
+            "question_type":1
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 5,
+        "fields": {
+            "id_poll":2, 
+            "title":"question2", 
+            "question_type":1
+        }
+    }
+]
