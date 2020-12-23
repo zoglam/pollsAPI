@@ -145,8 +145,8 @@ class AlterTable(TestCase):
         print(f'\t\t>>> {poll}')
         self.assertEqual(resp['status'], 'True')
         self.assertEqual(poll.title, 'new_title')
-        
-        data = {'title': 'new_title', 'description':'new_desk'}
+
+        data = {'title': 'new_title', 'description': 'new_desk'}
         resp = self._response(data, f'{self.url_alter_poll}/2')
         print(f'\t>>> test 2: {resp}')
         poll = Poll.objects.get(pk=2)
@@ -165,7 +165,7 @@ class AlterTable(TestCase):
         self.assertEqual(resp['status'], 'True')
         self.assertEqual(question.title, 'new_title')
 
-        data = {'title': 'new_title', 'question_type':'2'}
+        data = {'title': 'new_title', 'question_type': '2'}
         resp = self._response(data, f'{self.url_alter_question}/2')
         print(f'\t>>> test 2: {resp}')
         question = Question.objects.get(pk=2)
@@ -173,6 +173,7 @@ class AlterTable(TestCase):
         self.assertEqual(resp['status'], 'True')
         self.assertEqual(question.title, 'new_title')
         self.assertEqual(question.question_type.pk, 2)
+
 
 class DeleteTable(TestCase):
 
@@ -203,7 +204,6 @@ class DeleteTable(TestCase):
         resp = self._response(f'{self.url_delete_poll}/99')
         print(f'\t>>> test 2: {resp}')
         self.assertEqual(resp['status'], 'False')
-        
 
     def test_delete_question(self):
         print('\n\t-- DeleteTable delete_question test --')
@@ -214,3 +214,26 @@ class DeleteTable(TestCase):
         resp = self._response(f'{self.url_delete_question}/99')
         print(f'\t>>> test 2: {resp}')
         self.assertEqual(resp['status'], 'False')
+
+
+class GetHistory(TestCase):
+
+    fixtures = ['initial_test_data2.json']
+
+    def setUp(self) -> None:
+        self.url_history = '/api/history'
+        self.c = Client()
+
+    def _response(self, url):
+        print(f'\t{url}')
+        request = self.c.get(url)
+        return json.loads(request.getvalue().decode("utf-8"))
+
+    def test_get_request(self):
+        print('\n\t-- GetHistory get_request test --')
+        resp = self._response(f'{self.url_history}/1')
+        print(f'\t>>> test 1: {resp["status"]}')
+        for history in resp["details"]:
+            print(f'\t\t>> {history}')
+        self.assertEqual(resp['status'], 'True')
+        self.assertEqual(len(resp["details"]), 2)

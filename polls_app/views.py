@@ -53,9 +53,15 @@ def pass_poll(request, id_poll=None):
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((AllowAny,))
-def get_history_by_id(request, id_question=None):
-    query = request.data
-    return Response({'status': 'False'}, status.HTTP_400_BAD_REQUEST)
+def get_history_by_id(request, id_user=None):
+    try:
+        history = History.objects.filter(user=id_user).values()
+        return Response({'status': 'True', 'details': history}, status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'status': 'False',
+            'details': f'{e}'
+        }, status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -64,7 +70,8 @@ def get_history_by_id(request, id_question=None):
 def get_polls(request):
     try:
         return Response({
-            'polls': Poll.get_all(request)}, status.HTTP_200_OK)
+            'status': 'True',
+            'details': Poll.get_all(request)}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
             'status': 'False',
