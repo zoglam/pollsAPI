@@ -4,8 +4,7 @@ from rest_framework import status
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
-
-from .models import Question, Answer
+from .models import Poll, Question, AnonymousUser, History, QuestionType
 # Create your views here.
 
 
@@ -14,10 +13,11 @@ from .models import Question, Answer
 @permission_classes((AllowAny,))
 def auth(request):
     query = request.data
-    if all((x in query for x in ['username', 'password'])):
+    requirements_fieds = ['username', 'password']
+
+    if all((x in query for x in requirements_fieds)):
         user = authenticate(
-            request, username=query['username'],
-            password=query['password']
+            request, **{k: query[k] for k in requirements_fieds}
         )
         if user is not None:
             login(request, user)
@@ -25,13 +25,46 @@ def auth(request):
     return Response({'status': 'False'}, status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((AllowAny,))
+def pass_poll(request, id_poll=None):
+    query = request.data
+    if 'user_id' not in request.session:
+        request.session['user_id'] = AnonymousUser.objects.create().pk
+    id_user = AnonymousUser.objects.get(pk=request.session['user_id'])
+    try:
+        for k in query:
+            if Question.objects.get(pk=k).id_poll.pk == int(id_poll):
+                History.objects.create(
+                    user=id_user,
+                    poll=Poll.objects.get(pk=id_poll),
+                    question=Question.objects.get(pk=k),
+                    text_question=query[k]
+                )
+        return Response({'status': 'True'}, status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'status': 'False',
+            'details': f'{e}'
+        }, status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((AllowAny,))
-def getQuestions(request):
+def get_history_by_id(request, id_question=None):
+    query = request.data
+    return Response({'status': 'False'}, status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@authentication_classes((SessionAuthentication, BasicAuthentication,))
+@permission_classes((AllowAny,))
+def get_polls(request):
     try:
         return Response({
-            'polls': Question.get_all(request)}, status.HTTP_200_OK)
+            'polls': Poll.get_all(request)}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
             'status': 'False',
@@ -42,13 +75,13 @@ def getQuestions(request):
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def createQuestion(request):
+def create_poll(request):
     query = request.data
     try:
         if 'title' not in query:
             raise Exception('Not enough values')
 
-        Question.custom_create(query)
+        Poll.custom_create(query)
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
@@ -60,10 +93,10 @@ def createQuestion(request):
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def alterQuestion(request, id_question=None):
+def alter_poll(request, id_poll=None):
     query = request.data
     try:
-        Question.custom_update(id_question, query)
+        Poll.custom_update(id_poll, query)
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
@@ -75,9 +108,9 @@ def alterQuestion(request, id_question=None):
 @api_view(['DELETE'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def deleteQuestion(request, id_question=None):
+def delete_poll(request, id_poll=None):
     try:
-        Question.objects.delete(pk=id_question)
+        Poll.objects.get(pk=id_poll).delete()
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
@@ -89,17 +122,17 @@ def deleteQuestion(request, id_question=None):
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def createAnswer(request):
+def create_question(request):
     query = request.data
+    requirement_fiels = ('id_poll', 'title', 'question_type')
     try:
-        if not all((x in query for x in
-                    ('id_question', 'title', 'answer_type'))):
+        if not all((x in query for x in requirement_fiels)):
             raise Exception('Not enough values')
 
-        Answer.objects.create(
-            id_question=query['id_question'],
+        Question.objects.create(
+            id_poll=Poll.objects.get(pk=query['id_poll']),
             title=query['title'],
-            answer_type=query['answer_type'],
+            question_type=QuestionType.objects.get(pk=query['question_type'])
         )
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
@@ -112,13 +145,17 @@ def createAnswer(request):
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def alterAnswer(request, id_answer=None):
+def alter_question(request, id_question=None):
     query = request.data
+    requirement_fiels = ('title', 'question_type')
     try:
-        Answer.objects.update(pk=id_answer, **{
-            k: query[k] for k in query
-            if k in ['title', 'votes', 'answer_type']
-        })
+        question = Question.objects.get(pk=id_question)
+        if 'title' in query:
+            question.title = query['title']
+        if 'question_type' in query:
+            question.question_type = QuestionType.objects.get(
+                pk=query['question_type'])
+        question.save()
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
@@ -130,9 +167,9 @@ def alterAnswer(request, id_answer=None):
 @api_view(['DELETE'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((IsAuthenticated,))
-def deleteAnswer(request, id_answer=None):
+def delete_question(request, id_question=None):
     try:
-        Answer.objects.delete(pk=id_answer)
+        Question.objects.get(pk=id_question).delete()
         return Response({'status': 'True'}, status.HTTP_200_OK)
     except Exception as e:
         return Response({
