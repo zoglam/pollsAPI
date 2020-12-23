@@ -2,18 +2,18 @@
 - [Cmd](#Native)
 - [Docker](#Docker)
 - [API Documentation](#API-Documentation)
-    - [`POST` api/auth/](#POST-api/auth/)
-    - [`POST` api/pass_poll/<id_poll>](#POST-api/pass_poll/<id_poll>)
-    - [`GET` api/history/<id_user>](#GET-api/history/<id_user>)
+    - [`POST` api/auth/](#POST-apiauth)
+    - [`POST` api/pass_poll/<id_poll>](#POST-apipass_pollid_poll)
+    - [`GET` api/history/<id_user>](#GET-apihistoryid_user)
     -
-    - [`GET` api/polls/](#GET-api/polls/)
-    - [`POST` api/create_poll/](#POST-api/create_poll/)
-    - [`POST` api/alter_poll/<id_poll>](#POST-api/alter_poll/<id_poll>)
-    - [`DELETE` api/delete_poll/<id_poll>](#DELETE-api/delete_poll/<id_poll>)
+    - [`GET` api/polls/](#GET-apipolls)
+    - [`POST` api/create_poll/](#POST-apicreate_poll)
+    - [`POST` api/alter_poll/<id_poll>](#POST-apialter_pollid_poll)
+    - [`DELETE` api/delete_poll/<id_poll>](#DELETE-apidelete_pollid_poll)
     -
-    - [`POST` api/create_question/](#POST-api/create_question/)
-    - [`POST` api/alter_question/<id_question>](#POST-api/alter_question/<id_question>)
-    - [`DELETE` api/delete_question/<id_question>](#DELETE-api/delete_question/<id_question>)
+    - [`POST` api/create_question/](#POST-apicreate_question)
+    - [`POST` api/alter_question/<id_question>](#POST-apialter_questionid_question)
+    - [`DELETE` api/delete_question/<id_question>](#DELETE-apidelete_questionid_question)
 - [Database scheme](#Database-scheme)
 # Cmd
 Prepare
@@ -70,7 +70,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -83,7 +83,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -131,7 +131,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>    
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -144,7 +144,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -176,7 +176,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -205,7 +205,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -232,7 +232,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -295,7 +295,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -330,7 +330,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -343,7 +343,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -386,7 +386,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -399,7 +399,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -431,7 +431,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -444,7 +444,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -479,7 +479,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -492,7 +492,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -524,7 +524,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -537,7 +537,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -569,7 +569,7 @@ Response
 <table>
 <tr><td> Status </td> <td> Response </td></tr>
 <tr>
-<td style="background-color:rgba(0,170,0,0.3);text-align:center"> 200 </td>
+<td style="text-align:center"> 200 </td>
 <td>
 Запрос успешно обработан<br/>
 <b>Example Value:</b>
@@ -582,7 +582,7 @@ Response
 </td>
 </tr>
 <tr>
-<td style="background-color:rgba(255,0,0,0.2);text-align:center"> 400  </td>
+<td style="text-align:center"> 400 </td>
 <td>
 Ошибка запроса<br/>
 <b>Example Value:</b>
@@ -601,5 +601,3 @@ Response
 
 # Database scheme
 [<img src="https://live.staticflickr.com/65535/50752040621_6032d1612a_h.jpg" width=900>](https://live.staticflickr.com/65535/50752040621_6032d1612a_h.jpg)
-
-**[⬆ Back to Top](#Contents-pollsAPI)**
