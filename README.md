@@ -418,7 +418,7 @@ Response
 <hr>
 
 ## `DELETE` api/delete_poll/<id_poll>
-**Метод для авторизации администратора**
+**Метод для удаления опроса**
 ```
 Parameters
 ```
@@ -464,7 +464,7 @@ Response
 
 
 ## `POST` api/create_question/
-**Метод для авторизации администратора**
+**Метод для создания вопроса**
 ```
 Parameters
 ```
@@ -511,7 +511,7 @@ Response
 <hr>
 
 ## `POST` api/alter_question/<id_question>
-**Метод для авторизации администратора**
+**Метод для изменения полей вопроса**
 ```
 Parameters
 ```
@@ -556,7 +556,7 @@ Response
 <hr>
 
 ## `DELETE` api/delete_question/<id_question>
-**Метод для авторизации администратора**
+**Метод для удаления вопроса**
 ```
 Parameters
 ```
