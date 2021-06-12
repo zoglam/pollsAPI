@@ -19,11 +19,12 @@
 Prepare
 ```
 python -m pip install -r Requirements.txt
+https://wkhtmltopdf.org/downloads.html
 ```
 ```
 python manage.py makemigrations
 python manage.py migrate
-python manage.py loaddata initial_data.json
+python manage.py loaddata initial_test_data.json
 python manage.py createsuperuser --username admin --email test@test.test
 ```
 Test

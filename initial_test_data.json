@@ -24,14 +24,16 @@
         "model": "polls_app.Poll",
         "pk": 1,
         "fields": {
-            "title": "poll1"
+            "title": "Президенты США",
+            "description": "Кто из президентов США написал свой собственный рассказ про Шерлока Холмса?"
         }
     },
     {
         "model": "polls_app.Poll",
         "pk": 2,
         "fields": {
-            "title": "poll2"
+            "title": "Англии XII веке",
+            "description": "Какую пошлину ввели в XII  веке в Англии для того чтобы заставить мужчин пойти на войну?"
         }
     },
     {
@@ -39,7 +41,7 @@
         "pk": 1,
         "fields": {
             "id_poll":1, 
-            "title":"question1", 
+            "title":"Джон Кеннеди", 
             "question_type":1
         }
     },
@@ -48,7 +50,7 @@
         "pk": 2,
         "fields": {
             "id_poll":1, 
-            "title":"question2", 
+            "title":"Франклин Рузвельт",
             "question_type":1
         }
     },
@@ -57,7 +59,7 @@
         "pk": 3,
         "fields": {
             "id_poll":1,
-            "title":"question3", 
+            "title":"Рональд Рейган", 
             "question_type":1
         }
     },
@@ -66,7 +68,7 @@
         "pk": 4,
         "fields": {
             "id_poll":2, 
-            "title":"question1", 
+            "title":"Налог на тунеядство", 
             "question_type":1
         }
     },
@@ -75,7 +77,16 @@
         "pk": 5,
         "fields": {
             "id_poll":2, 
-            "title":"question2", 
+            "title":"Налог на трусость", 
+            "question_type":1
+        }
+    },
+    {
+        "model": "polls_app.Question",
+        "pk": 6,
+        "fields": {
+            "id_poll":2, 
+            "title":"Налог на отсутствие сапог", 
             "question_type":1
         }
     }
