@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+
+{% block title %} <title>Опросы</title> {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+<link rel="stylesheet" href="{% static 'css/polls.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="menu-block">
+    {% for poll in polls %}
+    <div class="poll-card">
+        <div class="poll-header">
+            <div class="poll-title">
+                <span>{{poll.id}}</span> <span class="poll-title-value">{{poll.title}}</span>
+                <div class="poll-edit">Изменить</div>
+                <div class="poll-delete">Удалить</div>
+            </div>
+            <div class="poll-description">{{poll.description}}</div>
+        </div>
+        <div class="poll-questions">
+            {% for question in poll.questions %}
+            <div class="poll-question-item">{{question.title}}</div>
+            {% endfor %}
+        </div>
+        <div class="poll-footer">
+            Дата публикации: {{poll.date_published}} | Дата окончания: {{poll.date_end}}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <div class="poll-card">
+        <div class="poll-header">
+            <div class="poll-title">
+                <input type="text" placeholder="Название">
+                <div class="poll-add">Добавить</div>
+            </div>
+            <div class="poll-description">
+                <textarea type="text" placeholder="Описание"></textarea>
+            </div>
+        </div>
+        <div class="poll-footer">
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer_js %}
+    <script src="{% static 'js/polls.js' %}"></script>
+    {% endblock %}

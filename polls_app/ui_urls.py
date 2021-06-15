@@ -5,7 +5,7 @@ from . import ui_views
 app_name = 'polls_app'
 
 urlpatterns = [
-    url(r'^index/', ui_views.index),
+    url(r'^$', ui_views.menu),
     url(r'^polls/', ui_views.polls),
     url(r'^questions/', ui_views.questions),
     url(r'^history/', ui_views.history)

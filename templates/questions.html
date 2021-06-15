@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+
+{% block title %} <title>Вопросы</title> {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="menu-block">
+    <div class="menu-element">Опросы</div>
+    <div class="menu-element">История</div>
+    <div class="menu-element">Вопросы</div>
+</div>
+
+{% endblock %}

@@ -13,15 +13,14 @@ from datetime import datetime
 import xlsxwriter
 import pdfkit
 from xhtml2pdf import pisa
-from io import StringIO, BytesIO
 from django_pdfkit import PDFView
 
 
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
 @permission_classes((AllowAny,))
-def index(request):
-    template = loader.get_template("index.html")
+def menu(request):
+    template = loader.get_template("menu.html")
     return HttpResponse(template.render())
 
 
@@ -30,7 +29,8 @@ def index(request):
 @permission_classes((AllowAny,))
 def polls(request):
     template = loader.get_template("polls.html")
-    return HttpResponse(template.render())
+    print(Poll.get_all(request))
+    return HttpResponse(template.render({'polls': Poll.get_all(request)}))
 
 
 @api_view(['GET'])
