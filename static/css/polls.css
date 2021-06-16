@@ -4,7 +4,7 @@
     flex-direction: column;
     font-size: 24px;
     font-weight: 700;
-    width: 60%;
+    width: 80%;
     padding: 15px;
 }
 
@@ -96,9 +96,8 @@
 }
 
 .poll-card input {
-    padding: 10px;
     font-size: 20px;
-    width: 60%;
+    width: 50%;
 }
 
 .poll-card textarea {
@@ -118,7 +117,7 @@
     height: 28px;
     background-color: green;
     right: 16px;
-    top: 25px;
+    top: 16px;
     font-size: 15px;
     border-radius: 5px;
 }

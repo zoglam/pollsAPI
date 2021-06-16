@@ -12,8 +12,6 @@ from django.template import loader
 from datetime import datetime
 import xlsxwriter
 import pdfkit
-from xhtml2pdf import pisa
-from django_pdfkit import PDFView
 
 
 @api_view(['GET'])

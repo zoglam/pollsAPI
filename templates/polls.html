@@ -14,7 +14,7 @@
     <div class="poll-card">
         <div class="poll-header">
             <div class="poll-title">
-                <span>{{poll.id}}</span> <span class="poll-title-value">{{poll.title}}</span>
+                <u>{{poll.id}}</u> <span class="poll-title-value">{{poll.title}}</span>
                 <div class="poll-edit">Изменить</div>
                 <div class="poll-delete">Удалить</div>
             </div>
@@ -26,7 +26,7 @@
             {% endfor %}
         </div>
         <div class="poll-footer">
-            Дата публикации: {{poll.date_published}} | Дата окончания: {{poll.date_end}}
+            Дата публикации: {{poll.date_published}}
         </div>
 
     </div>
