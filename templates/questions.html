@@ -1,17 +1,63 @@
-{% extends "index.html" %}
-{% load staticfiles %}
+{% extends "index.html" %} {% load staticfiles %} {% block title %}
+<title>Вопросы</title> {% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/questions.css' %}" />
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+/>
+{% endblock %} {% block content %}
 
-{% block title %} <title>Вопросы</title> {% endblock %}
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/menu.css' %}">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Опрос</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in questions %}
+        <tr>
+            <th scope="row">{{ question.id }}</th>
+            <td>{{ question.title }}</td>
+            <td>{{ types|get_item:question.question_type_id }}</td>
+            <td>{{ polls|get_item:question.id_poll_id }}</td>
+            <td>
+                <button class="question-delete">Удалить</button>
+            </td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <th scope="row">#</th>
+            <td><input type="text" /></td>
+            <td>
+                <select>
+                    {% for id, type in types.items %}
+                    <option value="{{id}}">{{ type }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select>
+                    {% for id, poll in polls.items %}
+                    <option value="{{id}}">{{ poll }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <button class="question-add">Добавить</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 {% endblock %}
-
-{% block content %}
-
-<div class="menu-block">
-    <div class="menu-element">Опросы</div>
-    <div class="menu-element">История</div>
-    <div class="menu-element">Вопросы</div>
-</div>
-
+{% block footer_js %}
+<script src="{% static 'js/questions.js' %}"></script>
 {% endblock %}

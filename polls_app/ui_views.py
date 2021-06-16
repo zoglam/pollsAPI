@@ -8,10 +8,16 @@ from .models import Poll, Question, AnonymousUser, History, QuestionType
 # Create your views here.
 from django.http import HttpResponse, FileResponse
 from django.template import loader
+from django.template.defaulttags import register
 
 from datetime import datetime
 import xlsxwriter
 import pdfkit
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 
 @api_view(['GET'])
@@ -27,7 +33,6 @@ def menu(request):
 @permission_classes((AllowAny,))
 def polls(request):
     template = loader.get_template("polls.html")
-    print(Poll.get_all(request))
     return HttpResponse(template.render({'polls': Poll.get_all(request)}))
 
 
@@ -36,7 +41,20 @@ def polls(request):
 @permission_classes((AllowAny,))
 def questions(request):
     template = loader.get_template("questions.html")
-    return HttpResponse(template.render())
+    print(Poll.get_all(request))
+    return HttpResponse(template.render(
+        {
+            'questions': list(Question.objects.all().values()),
+            'types': {
+                1: 'текст',
+                2: 'радио',
+                3: 'флаг'
+            },
+            'polls': {
+                x['id']: x['title'] for x in Poll.get_all(request)
+            }
+        }
+    ))
 
 
 @api_view(['GET'])

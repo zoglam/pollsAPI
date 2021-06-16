@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% block title %}{% endblock %}
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        {% block styles %}{% endblock %}
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+        {% block header_js %}{% endblock %}
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}{% endblock %}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% block styles %}{% endblock %}
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
-    {% block header_js %}{% endblock %}
-</head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-title">
+                    <a href="/web/" class="navbar-main">Главное меню</a>
+                </div>
+                <div class="navbar-report">
+                    <a href="/web/report" class="navbar-report-item">Табличный отчет</a>
+                    <a href="/web/excel_report" class="navbar-report-item">Графический отчет</a>
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
 
-<body>
-    <div class='container'>
-        {% block content %}{% endblock %}
-    </div>
-</body>
-
-{% block footer_js %}{% endblock %}
-
+    {% block footer_js %}{% endblock %}
 </html>
