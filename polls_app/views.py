@@ -81,7 +81,7 @@ def get_polls(request):
 
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def create_poll(request):
     query = request.data
     try:
@@ -99,7 +99,7 @@ def create_poll(request):
 
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def alter_poll(request, id_poll=None):
     query = request.data
     try:
@@ -114,7 +114,7 @@ def alter_poll(request, id_poll=None):
 
 @api_view(['DELETE'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def delete_poll(request, id_poll=None):
     try:
         Poll.objects.get(pk=id_poll).delete()
@@ -128,7 +128,7 @@ def delete_poll(request, id_poll=None):
 
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def create_question(request):
     query = request.data
     requirement_fiels = ('id_poll', 'title', 'question_type')
@@ -151,7 +151,7 @@ def create_question(request):
 
 @api_view(['POST'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def alter_question(request, id_question=None):
     query = request.data
     requirement_fiels = ('title', 'question_type')
@@ -173,7 +173,7 @@ def alter_question(request, id_question=None):
 
 @api_view(['DELETE'])
 @authentication_classes((SessionAuthentication, BasicAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def delete_question(request, id_question=None):
     try:
         Question.objects.get(pk=id_question).delete()

@@ -1,0 +1,54 @@
+.navbar {
+    margin-top: -50px;
+    
+}
+
+.table{
+    margin-top: 50px;
+}
+
+.question-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 94px;
+    height: 28px;
+    background-color: green;
+    font-size: 15px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.question-add:hover {
+    cursor: pointer;
+    background-color: rgb(0, 163, 0);
+    transition: background-color 0.1s;
+}
+
+.question-add:active {
+    background-color: rgb(0, 95, 0);
+}
+
+.question-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 94px;
+    height: 28px;
+    background-color: red;
+    right: 16px;
+    top: 16px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.question-delete:hover {
+    cursor: pointer;
+    background-color: rgb(173, 0, 0);
+    transition: background-color 0.1s;
+}
+
+.question-delete:active {
+    background-color: rgb(110, 0, 0);
+}

@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Report</title>
+</head>
+
+<style>
+    *,
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
+    .data-table td {
+        text-align: center;
+    }
+
+    .data-table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+
+    .container:not(:first-child) {
+        margin-top: 30px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1> Отчет за {{ datetime }}</h1>
+        <hr>
+    </div>
+
+
+    <div class="container">
+        <h2>Опросы:</h2>
+        <table class='data-table'>
+            <tr>
+                <th>Индентификатор</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Дата публикация</th>
+                <th>Дата окончания</th>
+            </tr>
+            {% for courier in couriers %}
+            <tr>
+                <td>{{ courier.id }}</td>
+                <td>{{ courier.title }}</td>
+                <td>{{ courier.description }}</td>
+                <td>{{ courier.date_published }}</td>
+                <td>{{ courier.date_end }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    <div class="container">
+        <br>
+        <h2>Вопросы:</h2>
+        <table class='data-table'>
+            <tr>
+                <th>Индентификатор</th>
+                <th>Индентификатор опроса</th>
+                <th>Название</th>
+                <th>Тип вопроса</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.id_poll_id }}</td>
+                <td>{{ order.title }}</td>
+                <td>{{ order.question_type_id }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="container">
+        <hr>
+        НИУ МЭИ 2021
+    </div>
+</body>
+
+</html>

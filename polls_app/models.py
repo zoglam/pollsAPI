@@ -52,13 +52,11 @@ class Poll(models.Model):
     @staticmethod
     def get_all(request: rest_framework.request.Request) -> list:
         response_list = []
-        polls = (
-            Poll.objects.all().values()
-            if request.user.is_authenticated
-            else Poll.objects.filter(date_end__gte=datetime.now()).values()
-        )
+        polls = Poll.objects.all().values()
         for x in polls:
-            x['questions'] = Question.objects.filter(id_poll=x['id']).values()
+            x['questions'] = list(
+                Question.objects.filter(id_poll=x['id']).values()
+            )
             response_list.append(x)
         return response_list
 
